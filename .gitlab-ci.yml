@@ -1,0 +1,19 @@
+image: docker:latest
+
+variables:
+
+stages:
+  - deploy_test
+
+
+deploy_test:
+  when: manual
+  stage: deploy_test
+  tags:
+    - aws
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  script:
+    - ls
+    - aws s3 cp testing-substack.yml s3://gitlab-cicd
+    - aws cloudformation package --template-file testing-mainstack.yml --s3-bucket gitlab-cicd --output-template testing-packstack.yaml
+    - aws cloudformation deploy --force-upload --template-file packaged_dev.yaml --stack-name TestingB2BCDeploy --profile tokiotest --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_IAM

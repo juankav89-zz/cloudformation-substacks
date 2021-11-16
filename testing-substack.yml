@@ -1,0 +1,18 @@
+Resources:
+  TestingSubLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Testing lambda inside substack"
+      CodeUri: ./
+      Handler: lambda-two.lambda_handler
+      Runtime: python3.8
+      FunctionName: TestingSubLambda
+      # Role: arn:aws:iam::000365055762:role/lambda-essential-role
+      Timeout: 480
+      # Events:
+      #   B2bCImportOrdersApiEvent:
+      #     Type: Api
+      #     Properties:
+      #       Path: /b2b-channels/import-orders
+      #       Method: GET
+      #       RestApiId: !Ref B2bCAPIDev
